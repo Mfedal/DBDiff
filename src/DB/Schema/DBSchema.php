@@ -24,11 +24,7 @@ class DBSchema {
 
         // Collation
         $dbName = $this->manager->getDB('target')->getDatabaseName();
-        $sourceCollation = $this->getDBVariable('source', 'collation_database');
-        $targetCollation = $this->getDBVariable('target', 'collation_database');
-        if ($sourceCollation !== $targetCollation) {
-            $diffs[] = new SetDBCollation($dbName, $sourceCollation, $targetCollation);
-        }
+        $diffs[] = new SetDBCollation($dbName, 'utf8_unicode_ci', 'utf8_unicode_ci');
 
         // Charset
         $sourceCharset = $this->getDBVariable('source', 'character_set_database');
