@@ -68,6 +68,7 @@ class TableSchema {
     }
 
     public function getDiff($table) {
+        global $forceInnoDB;
         Logger::info("Now calculating schema diff for table `$table`");
         
         $diffSequence = [];
@@ -77,8 +78,12 @@ class TableSchema {
         // Engine
         $sourceEngine = $sourceSchema['engine'];
         $targetEngine = $targetSchema['engine'];
-        if ($sourceEngine != $targetEngine) {
-            $diffSequence[] = new AlterTableEngine($table, $sourceEngine, $targetEngine);
+        if ($forceInnoDB) {
+            $diffSequence[] = new AlterTableEngine($table, 'InnoDB', 'InnoDB');
+        } else {
+            if ($sourceEngine != $targetEngine) {
+                $diffSequence[] = new AlterTableEngine($table, $sourceEngine, $targetEngine);
+            }
         }
 
         // Collation
