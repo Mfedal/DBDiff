@@ -7,14 +7,10 @@ use DBDiff\Exceptions\BaseException;
 use DBDiff\Logger;
 use DBDiff\Templater;
 
-
-class DBDiff {
-    
-    public function run() {
-
-        // Increase memory limit
-        ini_set('memory_limit', '512M');
-
+class DBDiff
+{
+    public function run()
+    {
         try {
             $params = ParamsFactory::get();
 
@@ -28,7 +24,8 @@ class DBDiff {
             } else {
                 // SQL
                 $sqlGenerator = new SQLGenerator($diff);
-                $up =''; $down = '';
+                $up ='';
+                $down = '';
                 if ($params->include !== 'down') {
                     $up = $sqlGenerator->getUp();
                 }
@@ -42,7 +39,6 @@ class DBDiff {
             }
 
             Logger::success("Completed");
-
         } catch (\Exception $e) {
             if ($e instanceof BaseException) {
                 Logger::error($e->getMessage(), true);
@@ -51,6 +47,5 @@ class DBDiff {
                 throw $e;
             }
         }
-
     }
 }
