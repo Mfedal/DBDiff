@@ -79,10 +79,20 @@ class TableSchema {
         $sourceEngine = $sourceSchema['engine'];
         $targetEngine = $targetSchema['engine'];
         if ($forceInnoDB) {
-            $diffSequence[] = new AlterTableEngine($table, 'InnoDB', 'InnoDB');
+            if ($targetEngine != 'InnoDB') {
+                $diffSequence[] = new AlterTableEngine(
+                    $table,
+                    'InnoDB',
+                    'InnoDB'
+                );
+            }
         } else {
             if ($sourceEngine != $targetEngine) {
-                $diffSequence[] = new AlterTableEngine($table, $sourceEngine, $targetEngine);
+                $diffSequence[] = new AlterTableEngine(
+                    $table,
+                    $sourceEngine,
+                    $targetEngine
+                );
             }
         }
 
