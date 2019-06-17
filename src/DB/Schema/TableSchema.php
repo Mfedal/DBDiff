@@ -89,14 +89,17 @@ class TableSchema {
         // Collation
         $sourceCollation = $sourceSchema['collation'];
         $targetCollation = $targetSchema['collation'];
-        if ($sourceCollation != $targetCollation) {
+        if (
+            $sourceCollation != $targetCollation &&
+            $targetCollation != 'utf8_unicode_ci'
+        ) {
             $diffSequence[] = new AlterTableCollation(
                 $table,
                 $sourceCollation,
                 'utf8_unicode_ci'
             );
         }
-        
+
         // Columns
         $sourceColumns = $sourceSchema['columns'];
         $targetColumns = $targetSchema['columns'];
