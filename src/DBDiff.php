@@ -11,11 +11,15 @@ class DBDiff
 {
     public function run()
     {
+        global $forceInnoDB;
+
         try {
             $params = ParamsFactory::get();
 
+            $forceInnoDB = $params->forceInnoDB;
+
             // Diff
-            $diffCalculator = new DiffCalculator;
+            $diffCalculator = new DiffCalculator();
             $diff = $diffCalculator->getDiff($params);
 
             // Empty diff
@@ -24,7 +28,7 @@ class DBDiff
             } else {
                 // SQL
                 $sqlGenerator = new SQLGenerator($diff);
-                $up ='';
+                $up = '';
                 $down = '';
                 if ($params->include !== 'down') {
                     $up = $sqlGenerator->getUp();
