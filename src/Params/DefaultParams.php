@@ -1,8 +1,7 @@
 <?php namespace DBDiff\Params;
 
-
-class DefaultParams {
-    
+class DefaultParams
+{
     // Specify the source db connection details. If there is only one
     public $server1 = [];
 
@@ -47,10 +46,14 @@ class DefaultParams {
     */
     public $debug = false;
 
+    /* 
+     Enable or disable warnings
+    */
+    public $forceInnoDB = false;
+
     /*
      The penultimate parameter is what to compare: db1.table1:db2.table3 or​ db1:db2 
      This tool can compare just one table or all tables (entire db) from the database
     */
     public $input = [];
-
 }
